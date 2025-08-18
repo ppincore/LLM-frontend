@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
+import { NotFoundPage, LoginPage } from '../pages/pages';
 
 export interface IRoute {
   path: string;
@@ -20,7 +20,7 @@ export const staticRoute: IRoute = {
   component: <NotFoundPage />,
 };
 export const publicRoutes: IRoute[] = [
-  // { path: RouteNames.LOGIN, component: <Login /> },
+  { path: RouteNames.LOGIN, component: <LoginPage /> },
   // { path: RouteNames.CREATE_ACCOUNT, component: <CreateAccount /> },
 ];
 export const privateRoutes: IRoute[] = [
