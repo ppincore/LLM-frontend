@@ -2,7 +2,9 @@ import style from './FormLogin.module.scss';
 import { Button, Form, Input, Typography } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { rules } from '../../utils/rules';
+import { userApi } from '../../store/services/userServices/userService';
 import React, { useEffect } from 'react';
+import type { TLoginData } from '../../store/services/userServices/types';
 // import { rules } from '../../utils/rules'
 
 const { Text } = Typography;
@@ -11,12 +13,18 @@ const FormLogin = () => {
   const isLoading = false;
   const errorMessage = '';
 
-  const onFinish = (values: { username: string; password: string }) => {
-    console.log(values);
+  const [loginUser] = userApi.useLoginUserMutation();
+
+  const onFinish = (values: TLoginData) => {
+    loginUser(values);
+  };
+
+  const clearErrors = () => {
+    console.debug('errors cleared'); // dispatch errors
   };
 
   useEffect(() => {
-    console.debug('useEffected');
+    clearErrors();
   }, []);
 
   return (
