@@ -1,0 +1,15 @@
+@use './reset.scss';
+@use "./variables/fonts.scss";
+@use "./variables/spacings.scss";
+@use "./variables/icons.scss";
+
+
+body {
+  font: var(--font-body1);
+  color: var(--color-text-primary);
+}
+
+.app {
+  background: var(--color-fill-white);
+  min-height: 100vh;
+}
