@@ -18,3 +18,7 @@ export const userApi = createApi({
     }),
   }),
 });
+
+const useLoginUser = userApi.useLoginUserMutation;
+
+export { useLoginUser };

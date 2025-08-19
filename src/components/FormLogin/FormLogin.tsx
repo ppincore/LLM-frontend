@@ -2,21 +2,27 @@ import style from './FormLogin.module.scss';
 import { Button, Form, Input, Typography } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { rules } from '../../utils/rules';
-import { userApi } from '../../store/services/userServices/userService';
-import React, { useEffect } from 'react';
+import { useLoginUser } from '../../store/services/userServices/userService';
+import { useCallback, useEffect, useState } from 'react';
 import type { TLoginData } from '../../store/services/userServices/types';
 // import { rules } from '../../utils/rules'
 
 const { Text } = Typography;
 
 const FormLogin = () => {
-  const isLoading = false;
-  const errorMessage = '';
+  const [loginUser, { isLoading }] = useLoginUser();
+  const [loginForm, setLoginFrom] = useState<TLoginData>({
+    email: '',
+    password: '',
+  });
+  const [loginError, setLoginError] = useState<string>('');
 
-  const [loginUser] = userApi.useLoginUserMutation();
+  const onAuth = useCallback(async () => {
+    const result = await loginUser(loginForm);
+  }, []);
 
   const onFinish = (values: TLoginData) => {
-    loginUser(values);
+    // loginUser(values);
   };
 
   const clearErrors = () => {
@@ -33,7 +39,7 @@ const FormLogin = () => {
         Only login via email, or +7 phone number login is supported.
       </Text>
       <Form.Item
-        name="username"
+        name="email"
         rules={[rules.required('Please input your username')]}
       >
         <Input prefix={<UserOutlined />} placeholder="email" />
@@ -52,9 +58,9 @@ const FormLogin = () => {
         By signing up or logging in, you consent to PinCore's Terms of Use and
         Privacy Policy.
       </Text>
-      {errorMessage && (
+      {isError && (
         <Text type="danger" className={style.description}>
-          {errorMessage}
+          {isError}
         </Text>
       )}
 
