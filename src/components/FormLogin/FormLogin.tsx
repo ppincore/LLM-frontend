@@ -1,52 +1,54 @@
-import style from './FormLogin.module.scss';
-import { Button, Form, Input, Typography } from 'antd';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { rules } from '../../utils/rules';
-import { useLoginUser } from '../../store/services/userServices/userService';
-import { useCallback, useEffect, useState } from 'react';
-import type { TLoginData } from '../../store/services/userServices/types';
+import style from "./FormLogin.module.scss";
+import { Button, Form, Input, Typography } from "antd";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { rules } from "../../shared/lib/utils/rules";
+// import { useLoginUser } from '../../store/services/userServices/userService';
+// import { useCallback, useEffect, useState } from "react";
+// import type { TLoginData } from "../../store/services/userServices/types";
 // import { rules } from '../../utils/rules'
+
 
 const { Text } = Typography;
 
 const FormLogin = () => {
-  const [loginUser, { isLoading }] = useLoginUser();
-  const [loginForm, setLoginFrom] = useState<TLoginData>({
-    email: '',
-    password: '',
-  });
-  const [loginError, setLoginError] = useState<string>('');
+  // const [loginUser, { isLoading }] = useLoginUser();
+  // const [loginForm, setLoginFrom] = useState<TLoginData>({
+  //   email: "",
+  //   password: "",
+  // });
+  // const [loginError, setLoginError] = useState<string>("");
+  // const isLoading = false;
+  // const onAuth = useCallback(async () => {
+  //   const result = await loginUser(loginForm);
+  // }, []);
 
-  const onAuth = useCallback(async () => {
-    const result = await loginUser(loginForm);
-  }, []);
+  // const onFinish = (values: TLoginData) => {
+  //   // loginUser(values);
+  // };
 
-  const onFinish = (values: TLoginData) => {
-    // loginUser(values);
-  };
+  // const clearErrors = () => {
+  //   console.debug("errors cleared"); // dispatch errors
+  // };
 
-  const clearErrors = () => {
-    console.debug('errors cleared'); // dispatch errors
-  };
-
-  useEffect(() => {
-    clearErrors();
-  }, []);
+  // useEffect(() => {
+  //   clearErrors();
+  // }, []);
 
   return (
-    <Form size="large" onFinish={onFinish}>
+    // <Form size="large" onFinish={onFinish}>
+    <Form size="large">
       <Text type="secondary" className={style.description}>
         Only login via email, or +7 phone number login is supported.
       </Text>
       <Form.Item
         name="email"
-        rules={[rules.required('Please input your username')]}
+        rules={[rules.required("Please input your username")]}
       >
         <Input prefix={<UserOutlined />} placeholder="email" />
       </Form.Item>
       <Form.Item
         name="password"
-        rules={[rules.required('Please input your password')]}
+        rules={[rules.required("Please input your password")]}
       >
         <Input.Password
           prefix={<LockOutlined />}
@@ -58,11 +60,11 @@ const FormLogin = () => {
         By signing up or logging in, you consent to PinCore's Terms of Use and
         Privacy Policy.
       </Text>
-      {isError && (
+      {/* {isError && (
         <Text type="danger" className={style.description}>
           {isError}
         </Text>
-      )}
+      )} */}
 
       <Form.Item>
         <Button
@@ -70,7 +72,7 @@ const FormLogin = () => {
           type="primary"
           htmlType="submit"
           block
-          loading={isLoading}
+          // loading={isLoading}
         />
       </Form.Item>
     </Form>
