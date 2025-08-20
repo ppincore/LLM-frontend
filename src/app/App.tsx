@@ -1,4 +1,4 @@
-import AppRouter from '../AppRouter/AppRouter';
+import AppRouter from "../components/AppRouter/AppRouter";
 const App = () => {
   return <AppRouter />;
 };
