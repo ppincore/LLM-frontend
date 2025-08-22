@@ -1,19 +1,22 @@
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
-import { publicRoutes, privateRoutes, staticRoute } from '../../routes/index'
-// import { useSelector } from '../../store/store.ts';
-// import { selectIsAuth } from '../../store/slices/userSlice/userSlice';
+import { publicRoutes,staticRoute, privateRoutes } from '../../shared/const/routes';
 import { useEffect } from 'react';
+import { useAppSelector } from '../../shared/lib/hooks/useAppSelector/useAppSelector';
+import { selectIsInit } from '../../entities/User/model/selectors/selectors';
+
 
 const AppRouter = () => {
-  // const isAuth = useSelector(selectIsAuth) || localStorage.getItem('auth');
-  const isAuth = false;
+  const isAuth = useAppSelector(selectIsInit)
   const navigate = useNavigate();
 
+  console.debug(isAuth)
   useEffect(() => {
     if (isAuth) {
       navigate('/', { replace: true });
     }
+
+  console.debug(isAuth)
   }, [isAuth]);
 
   return (
