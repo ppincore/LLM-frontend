@@ -47,5 +47,5 @@ export const rtkApi = createApi({
     object,
     FetchBaseQueryMeta
   >,
-  endpoints: (_builder) => ({}),
+  endpoints: (builder) => ({}),
 });

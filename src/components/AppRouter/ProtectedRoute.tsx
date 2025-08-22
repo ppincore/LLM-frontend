@@ -4,7 +4,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 interface IProtectedRouteProps {
   children: ReactNode;
   authOnly?: boolean;
-  isAuth: boolean;
+  isAuth?: boolean;
 }
 
 const ProtectedRoute = (props: IProtectedRouteProps) => {
