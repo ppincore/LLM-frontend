@@ -2,41 +2,56 @@ import style from "./FormLogin.module.scss";
 import { Button, Form, Input, Typography } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { rules } from "../../shared/lib/utils/rules";
-// import { useLoginUser } from '../../store/services/userServices/userService';
-// import { useCallback, useEffect, useState } from "react";
-// import type { TLoginData } from "../../store/services/userServices/types";
-// import { rules } from '../../utils/rules'
-
+import { useAuthByEmail } from "../../features/Authentication/api/authenticationApi";
+import { useCallback, useEffect, useState } from "react";
+import { isFetchError } from "../../shared/lib/typeGuards";
+import type { TLoginData } from "../../store/services/userServices/types";
+import { useAppDispatch } from "../../shared/lib";
+import { userActions } from "../../entities/User/model/slice/userSlice";
+import { useNavigate } from "react-router-dom";
+import { getRouteMain, getRouteLogin } from "../../shared/const/routes";
 
 const { Text } = Typography;
 
 const FormLogin = () => {
-  // const [loginUser, { isLoading }] = useLoginUser();
-  // const [loginForm, setLoginFrom] = useState<TLoginData>({
-  //   email: "",
-  //   password: "",
-  // });
-  // const [loginError, setLoginError] = useState<string>("");
-  // const isLoading = false;
-  // const onAuth = useCallback(async () => {
-  //   const result = await loginUser(loginForm);
-  // }, []);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [loginUser, { isLoading }] = useAuthByEmail();
+  const [loginError, setLoginError] = useState<string>();
 
-  // const onFinish = (values: TLoginData) => {
-  //   // loginUser(values);
-  // };
+  const onAuth = useCallback(
+    async (values: TLoginData) => {
+      const result = await loginUser(values);
+      if (isFetchError(result)) {
+        setLoginError(result.error.data?.message ?? "Server error");
+        return;
+      }
+      if ("data" in result && result.data) {
+        const { accessToken: token } = result.data;
+        dispatch(userActions.login(token!));
+        navigate(getRouteMain())
+      }
+    },
+    [dispatch, loginUser, navigate]
+  );
 
-  // const clearErrors = () => {
-  //   console.debug("errors cleared"); // dispatch errors
-  // };
+  const onFinish = (value: TLoginData) => {
+    onAuth(value);
+    console.debug(value);
+  };
 
-  // useEffect(() => {
-  //   clearErrors();
-  // }, []);
+  const clearErrors = () => {
+    setLoginError("");
+    console.debug("errors cleared"); // dispatch errors
+  };
+
+  useEffect(() => {
+    clearErrors();
+  }, []);
 
   return (
     // <Form size="large" onFinish={onFinish}>
-    <Form size="large">
+    <Form size="large" onFinish={onFinish}>
       <Text type="secondary" className={style.description}>
         Only login via email, or +7 phone number login is supported.
       </Text>
@@ -44,7 +59,11 @@ const FormLogin = () => {
         name="email"
         rules={[rules.required("Please input your username")]}
       >
-        <Input prefix={<UserOutlined />} placeholder="email" />
+        <Input
+          prefix={<UserOutlined />}
+          placeholder="email"
+          onChange={clearErrors}
+        />
       </Form.Item>
       <Form.Item
         name="password"
@@ -54,17 +73,18 @@ const FormLogin = () => {
           prefix={<LockOutlined />}
           placeholder="password"
           autoComplete="current-password"
+          onChange={clearErrors}
         />
       </Form.Item>
       <Text type="secondary" className={style.description}>
         By signing up or logging in, you consent to PinCore's Terms of Use and
         Privacy Policy.
       </Text>
-      {/* {isError && (
+      {loginError && (
         <Text type="danger" className={style.description}>
-          {isError}
+          {loginError}
         </Text>
-      )} */}
+      )}
 
       <Form.Item>
         <Button
@@ -72,7 +92,7 @@ const FormLogin = () => {
           type="primary"
           htmlType="submit"
           block
-          // loading={isLoading}
+          loading={isLoading}
         />
       </Form.Item>
     </Form>
