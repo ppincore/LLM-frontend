@@ -40,6 +40,15 @@ export const userSlice = createSlice({
 
       state._init = true;
     },
+    logOutUser: (state) => {
+      const localStorageToken = localStorage.getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
+      if(localStorageToken){
+        localStorage.removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
+        state.userData = {}
+        state._init = false
+        state.token = ''
+      }
+    }
   },
   selectors: {
     selectIsInit: (state) => state._init,
