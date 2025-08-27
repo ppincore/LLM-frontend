@@ -1,6 +1,5 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { parseJwt } from "../../../../shared/lib/utils/parseJwt";
-// import { userApi } from "../../api/userApi";
 import { ACCESS_TOKEN_LOCAL_STORAGE_KEY } from "../../../../shared/const/browserStorage";
 import type { IUser, IUserSchema } from "../types/user";
 
@@ -33,11 +32,18 @@ export const userSlice = createSlice({
       if (state._init) {
         return;
       }
+      const token = localStorage.getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
+      if(token){
+        state.userData = parseJwt<IUser>(token)
+        state.token = token
+      }
+
       state._init = true;
     },
   },
   selectors: {
     selectIsInit: (state) => state._init,
+    getUserAuthData: (state) => state.userData,
   },
 });
 
