@@ -2,9 +2,7 @@ import { rtkApi } from "../../../shared/api/rtkApi";
 import type {
   IAuthData,
   ILoginResponse,
-  IRegisterData,
-  IRegisterFormData,
-  IRegisterResponse,
+  ILogoutResponse,
 } from "../model/types/authentication";
 
 const authApi = rtkApi.injectEndpoints({
@@ -16,9 +14,16 @@ const authApi = rtkApi.injectEndpoints({
         body,
       }),
     }),
+    logOut: build.mutation<ILogoutResponse, void>({ // позднее вынести логаут из атунтификации
+      query: () => ({
+        url: "/logout",
+        method: "POST",
+      }),
+    }),
   }),
 });
 
 const useAuthByEmail = authApi.useAuthByEmailMutation;
+const useLogOutUser = authApi.useLogOutMutation;
 
-export { useAuthByEmail };
+export { useAuthByEmail, useLogOutUser };

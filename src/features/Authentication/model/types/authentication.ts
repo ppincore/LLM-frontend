@@ -21,3 +21,7 @@ export interface ILoginResponse {
 export interface IRegisterResponse {
   email?: string
 }
+
+export interface ILogoutResponse { //позднее вынести тип для логаут из атунтификации
+  message: string
+}
