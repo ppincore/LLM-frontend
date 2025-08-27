@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { NotFoundPage, LoginPage, MainPage } from "../../pages/pages";
+import { NotFoundPage, LoginPage, MainPage, RegisterPage } from "../../pages/pages";
 
 export interface IRoute {
   path: string;
@@ -7,10 +7,10 @@ export interface IRoute {
 }
 
 export enum RouteNames {
-  FORGOT_PASSWORD = "/forgot_password",
-  CREATE_ACCOUNT = "/sign_up",
+  // FORGOT_PASSWORD = "/forgot_password",
+  REGISTER = "/register",
   LOGIN = "/login",
-  MAIN = "/",
+  MAIN = "/", 
   NOT_FOUND = "*",
   ACCOUNT = "/profile",
 }
@@ -21,7 +21,7 @@ export const staticRoute: IRoute = {
 };
 export const publicRoutes: IRoute[] = [
   { path: RouteNames.LOGIN, component: <LoginPage /> },
-  // { path: RouteNames.CREATE_ACCOUNT, component: <CreateAccount /> },
+  {path: RouteNames.REGISTER, component: <RegisterPage/>}
 ];
 export const privateRoutes: IRoute[] = [
   { path: RouteNames.MAIN, component: <MainPage /> },
@@ -29,4 +29,5 @@ export const privateRoutes: IRoute[] = [
 
 export const getRouteMain = () => "/";
 export const getRouteLogin = () => "/login";
+export const getRouteRegister = () => "/register"
 export const getRouteNotFound = () => "*";
