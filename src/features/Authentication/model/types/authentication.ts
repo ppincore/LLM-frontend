@@ -5,7 +5,9 @@ export interface IAuthData {
   password: string;
 }
 
-export interface IRegisterData extends IAuthData {}
+export interface IRegisterData extends IAuthData {
+  l?:unknown 
+}
 
 export interface IRegisterFormData extends IRegisterData {
   passwordConfirm: string;
