@@ -1,3 +1,3 @@
 import { userSlice } from "../slice/userSlice";
 
-export const { selectIsInit } = userSlice.selectors;
+export const { selectIsInit, getUserAuthData } = userSlice.selectors;
