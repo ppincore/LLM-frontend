@@ -1,5 +1,5 @@
 import { Layout, Row, Card } from 'antd';
-import LoginForm from '@features/ui/LoginForm/LoginForm';
+import { LoginForm } from '@features/Authentication';
 
 const LoginPage = () => {
   return (

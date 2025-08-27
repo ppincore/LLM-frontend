@@ -1,8 +1,13 @@
+import { Layout,Row, Card } from "antd";
+
 const RegisterPage = () => {
   return (
-    <div>
-      RegisterPage
-    </div>
+    <Layout>
+      <Row justify='center' align='middle' className="h100">
+        <Card>
+        </Card>
+      </Row>
+    </Layout>
   );
 };
 
