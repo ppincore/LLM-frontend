@@ -1,19 +1,19 @@
-import style from "./FormLogin.module.scss";
+import style from "./LoginForm.module.scss";
 import { Button, Form, Input, Typography } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { rules } from "../../shared/lib/utils/rules";
-import { useAuthByEmail } from "../../features/Authentication/api/authenticationApi";
+import { rules } from "@shared/lib/utils/rules";
+import { useAuthByEmail } from "@features/Authentication/api/authenticationApi";
 import { useCallback, useEffect, useState } from "react";
-import { isFetchError } from "../../shared/lib/typeGuards";
-import type { TLoginData } from "../../store/services/userServices/types";
-import { useAppDispatch } from "../../shared/lib";
-import { userActions } from "../../entities/User/model/slice/userSlice";
+import { isFetchError } from "@shared/lib/typeGuards";
+import type { TLoginData } from "@store/services/userServices/types";
+import { useAppDispatch } from "@shared/lib";
+import { userActions } from "@entities/User/model/slice/userSlice";
 import { useNavigate } from "react-router-dom";
-import { getRouteMain, getRouteLogin } from "../../shared/const/routes";
+import { getRouteMain } from "@shared/const/routes";
 
 const { Text } = Typography;
 
-const FormLogin = () => {
+const LoginForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [loginUser, { isLoading }] = useAuthByEmail();
@@ -99,4 +99,4 @@ const FormLogin = () => {
   );
 };
 
-export default FormLogin;
+export default LoginForm;

@@ -1,11 +1,12 @@
 import { Layout, Row, Card } from 'antd';
-import FormLogin from '../../components/FormLogin/FormLogin';
+import LoginForm from '@features/ui/LoginForm/LoginForm';
+
 const LoginPage = () => {
   return (
     <Layout>
       <Row justify="center" align="middle" className="h100">
         <Card>
-          <FormLogin />
+          <LoginForm />
         </Card>
       </Row>
     </Layout>

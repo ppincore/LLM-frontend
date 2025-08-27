@@ -1,22 +1,26 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import ProtectedRoute from './ProtectedRoute';
-import { publicRoutes,staticRoute, privateRoutes } from '../../shared/const/routes';
-import { useEffect } from 'react';
-import { useAppSelector } from '../../shared/lib/hooks/useAppSelector/useAppSelector';
-import { selectIsInit } from '../../entities/User/model/selectors/selectors';
-
+import { Routes, Route, useNavigate } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
+import {
+  publicRoutes,
+  staticRoute,
+  privateRoutes,
+} from "@shared/const/routes";
+import { useEffect } from "react";
+import { useAppSelector } from "@shared/lib/hooks/useAppSelector/useAppSelector";
+import { getUserAuthData } from "@entities/User/model/selectors/selectors";
 
 const AppRouter = () => {
-  const isAuth = useAppSelector(selectIsInit)
+  const userData = useAppSelector(getUserAuthData);
+  const isAuth = Boolean(userData?.email); // заменить логику
   const navigate = useNavigate();
 
-  console.debug(isAuth)
   useEffect(() => {
     if (isAuth) {
-      navigate('/', { replace: true });
+      navigate("/", { replace: true });
     }
-
-  console.debug(isAuth)
+    if (!isAuth) {
+      navigate("/login", { replace: true });
+    }
   }, [isAuth]);
 
   return (
