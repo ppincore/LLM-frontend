@@ -1,5 +1,5 @@
 import style from "./LoginForm.module.scss";
-import { Button, Form, Input, Typography } from "antd";
+import { Button, Flex, Form, Input, Typography } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { rules } from "@shared/lib/utils/rules";
 import { useAuthByEmail } from "@features/Authentication/api/authenticationApi";
@@ -9,7 +9,8 @@ import type { TLoginData } from "@store/services/userServices/types";
 import { useAppDispatch } from "@shared/lib";
 import { userActions } from "@entities/User/model/slice/userSlice";
 import { useNavigate } from "react-router-dom";
-import { getRouteMain } from "@shared/const/routes";
+import { getRouteRegister, getRouteMain } from "@shared/const/routes";
+import { AppLink } from "@shared/ui";
 
 const { Text } = Typography;
 
@@ -29,7 +30,7 @@ const LoginForm = () => {
       if ("data" in result && result.data) {
         const { accessToken: token } = result.data;
         dispatch(userActions.login(token!));
-        navigate(getRouteMain())
+        navigate(getRouteMain());
       }
     },
     [dispatch, loginUser, navigate]
@@ -50,7 +51,6 @@ const LoginForm = () => {
   }, []);
 
   return (
-    // <Form size="large" onFinish={onFinish}>
     <Form size="large" onFinish={onFinish}>
       <Text type="secondary" className={style.description}>
         Only login via email, or +7 phone number login is supported.
@@ -85,7 +85,6 @@ const LoginForm = () => {
           {loginError}
         </Text>
       )}
-
       <Form.Item>
         <Button
           children="Log in"
@@ -95,6 +94,10 @@ const LoginForm = () => {
           loading={isLoading}
         />
       </Form.Item>
+      <Flex justify="space-between">
+        <Text>No account?</Text>
+        <AppLink to={getRouteRegister()}>Sign in</AppLink>
+      </Flex>
     </Form>
   );
 };
